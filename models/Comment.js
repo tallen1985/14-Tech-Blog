@@ -20,12 +20,13 @@ Comment.init(
         allowNull: false,
         references: {
             model: 'user',
-            key: 'id'
+            key: 'id',
         }
     },
     post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        onDelete: "CASCADE",
         references: {
             model: "post",
             key: 'id'

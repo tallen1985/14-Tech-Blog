@@ -1,0 +1,9 @@
+<div class="d-flex flex-column w-80 border border-dark my-3">
+    <div class="container-fluid bg-dark text-white d-flex flex-row justify-content-between align-items-center">
+        <div class="p-2 entryTitle"><h2>{{ title }}</h2></div>
+        <div class="text-light entryInfo">Created By <b>{{user.user_name}}</b> on {{formatDate createdAt }}</div>
+    </div>
+    <div class="container-fluid p-3">
+        {{ content }}
+    </div>
+</div>
