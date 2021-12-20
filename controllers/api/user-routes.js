@@ -1,22 +1,6 @@
 const router = require("express").Router();
+const res = require("express/lib/response");
 const { User, Post, Comment } = require("../../models/index");
-
-router.get("/", async (req, res) => {
-  try {
-    const userData = await User.findAll({
-      include: [{ model: Post }, { model: Comment }],
-    });
-
-    if (!userData) {
-      res.status(400).json({ Message: "No User's Found" });
-    }
-    res.status(200).send(userData);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ Message: "Internal Server Error Please try again later" });
-  }
-});
 
 router.post("/signup", async (req, res) => {
   try {
@@ -26,7 +10,16 @@ router.post("/signup", async (req, res) => {
     if (!userData) {
       res.status(400).json({ Message: "Error adding user" });
     }
-    res.status(200).send({ message: "Successfully added User" });
+
+    req.session.save(() => {
+      req.session.user_name = userData.dataValues.user_name;
+      req.session.logged_in = true;
+      req.session.user_id = userData.dataValues.id;
+
+      res
+        .status(200)
+        .json({ user: userData, message: "You are now logged in!" });
+    });
   } catch (error) {
     console.log(error);
     res
@@ -43,18 +36,38 @@ router.post("/login", async (req, res) => {
       },
     });
 
-    const validated = await userData.validatePassword(req.body.password);
-
-    if (!userData || !validated) {
+    if (!userData) {
       res.status(400).json({ Message: "Login Failed" });
+      res.end();
+      return;
     }
 
-    res.status(200).send("Successfully logged in!");
+    const validated = await userData.validatePassword(req.body.password);
+
+    if (validated) {
+      req.session.save(() => {
+        req.session.user_name = userData.dataValues.user_name;
+        req.session.logged_in = true;
+        req.session.user_id = userData.dataValues.id;
+        res.status(200).json({ message: "You are now logged in!" });
+        res.end();
+        return;
+      });
+    }
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ Message: "Internal Server Error Please try again later" });
+    res.json({ Message: "Internal Server Error Please try again later" });
+    res.end();
+  }
+});
+
+router.post("/logout", (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
   }
 });
 

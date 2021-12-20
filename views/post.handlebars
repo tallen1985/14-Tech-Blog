@@ -1,0 +1,16 @@
+<h2>Add Comment</h2>
+{{#each data as |post|}}
+{{> blogPost}}
+<form class="text-center" id="commentForm" data-method="post">
+      <div class="mb-3 text-start">
+        <label for="inputContent" class="form-label">What would you like to add?</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="inputContent"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-dark mx-auto">Add Comment</button>
+    </form>
+{{/each}}

@@ -22,12 +22,12 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
+            {{#if logged_in}}
             <li class="nav-item">
-              <a class="nav-link" href="#">Dashboard</a>
+              <a class="nav-link" href="/dashboard">[ {{user_name}}: Dashboard ]</a>
             </li>
-            {{#if loggedIn}}
             <li class="nav-item">
-              <a class="nav-link" href="#">Logout</a>
+              <a class="nav-link" href="#" id="logoutBtn">Logout</a>
             </li>
             {{else}}
             <li class="nav-item">
@@ -44,9 +44,11 @@
           Tech Blog
         </h1>
       </header>
-        <main class="container container-fluid">
+        <main class="container container-fluid" id="main">
           {{{ body }}}
         </main>
     </div>
+      <script src="./js/loginLogout.js"></script>
+      <script src="./js/addComments.js"></script>
     </body>
   </html>

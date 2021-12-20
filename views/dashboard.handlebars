@@ -1,0 +1,9 @@
+<h2>User Name: {{user_name}}</h2>
+<p>Joined on {{formatDate data.[0].createdAt}}</p>
+{{#each data as |post|}}
+  {{#each posts}}
+    {{> blogPost}}
+  {{/each}}
+{{/each}}
+
+<a href="/newPost" type="button" class="mx-auto d-block btn btn-dark">Create New Post</a>

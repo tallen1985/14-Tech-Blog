@@ -1,0 +1,29 @@
+<div class="d-flex flex-column w-80 border border-dark my-3">
+  <div
+    class="container-fluid bg-dark text-white d-flex flex-row justify-content-between align-items-center"
+  >
+    <div class="p-2 text-center">
+      <h2>New Post</h2>
+    </div>
+  </div>
+  <div class="container-fluid p-3">
+    <form class="text-center" id="postForm" data-method="post">
+      <div class="mb-3 text-start">
+        <label for="inputTitle" class="form-label">Post Title:</label>
+        <input type="text" class="form-control" id="inputTitle" required />
+      </div>
+      <div class="mb-3 text-start">
+        <label for="inputContent" class="form-label">Content</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="inputContent"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-dark mx-auto">Add Post</button>
+    </form>
+  </div>
+</div>
+
+<script src="./js/post.js"></script>

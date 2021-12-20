@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/connection");
 
 class Post extends Model {}
 
@@ -20,20 +20,21 @@ Post.init(
       allowNull: false,
     },
     user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        onDelete: 'CASCADE',
-        references: {
-            model: 'user',
-            key: 'id',
-        }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      onDelete: "CASCADE",
+      references: {
+        model: "user",
+        key: "id",
+      },
     },
   },
   {
     sequelize,
     freezeTableName: true,
+    timestamps: true,
     underscored: true,
-    modelName: 'post',
+    modelName: "post",
   }
 );
 
