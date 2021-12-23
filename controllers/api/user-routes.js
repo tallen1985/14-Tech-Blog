@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const res = require("express/lib/response");
 const { User, Post, Comment } = require("../../models/index");
 
 router.post("/signup", async (req, res) => {
@@ -53,6 +52,8 @@ router.post("/login", async (req, res) => {
         res.end();
         return;
       });
+    } else {
+      res.status(400).json({ Message: "Invalid Username or Password" });
     }
   } catch (error) {
     console.log(error);

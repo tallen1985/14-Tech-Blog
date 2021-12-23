@@ -12,7 +12,10 @@ const hbs = exphbs.create({ helpers });
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const sess = {
   secret: "LucyIanSarahJake",
-  cookie: {},
+  cookie: {
+    //maxAge is for an hour
+    maxAge: 1000 * 60 * 60,
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({

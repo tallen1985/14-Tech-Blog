@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const authorize = require("../utils/authorize");
 const { User, Post, Comment } = require("../models");
+const req = require("express/lib/request");
 
 router.get("/", async (req, res) => {
   const postData = await Post.findAll({
-    order: [["createdAt", "desc"]],
+    order: [["createdAt", "asc"]],
     include: [
       { model: User, attributes: ["user_name"] },
       {
@@ -70,4 +71,63 @@ router.get("/newPost", authorize, (req, res) => {
   });
 });
 
+router.get("/update/:id", authorize, async (req, res) => {
+  try {
+    const postData = await Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!postData) {
+      res.status(400).json({ Message: "No Post Found" });
+      return;
+    }
+
+    let data = [postData].map((e) => e.get({ plain: true }));
+    res.render("updatePost", {
+      data,
+      logged_in: req.session.logged_in,
+      user_name: req.session.user_name,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ Message: "Internal Server Error Please try again later" });
+  }
+});
+
+router.get("/post/:id", authorize, async (req, res) => {
+  try {
+    const postData = await Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: {
+        model: Comment,
+        include: [
+          {
+            model: User,
+            attributes: ["user_name"],
+          },
+        ],
+      },
+    });
+
+    if (!postData) {
+      res.status(400).json({ Message: "No Post Found" });
+      return;
+    }
+    let data = [postData].map((e) => e.get({ plain: true }));
+    res.render("post", {
+      data,
+      logged_in: req.session.logged_in,
+      user_name: req.session.user_name,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ Message: "Internal Server Error Please try again later" });
+  }
+});
 module.exports = router;

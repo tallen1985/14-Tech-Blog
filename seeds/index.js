@@ -6,14 +6,21 @@ const Comment = require("../models/Comment");
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  await User.create({
-    user_name: "Jake",
-    password: "password",
-  });
-  await User.create({
-    user_name: "Ian",
-    password: "dinosaur",
-  });
+  await User.bulkCreate(
+    [
+      {
+        user_name: "Jake",
+        password: "password",
+      },
+      {
+        user_name: "Ian",
+        password: "dinosaur",
+      },
+    ],
+    {
+      individualHooks: true,
+    }
+  );
   await Post.bulkCreate([
     {
       title: "generic post",

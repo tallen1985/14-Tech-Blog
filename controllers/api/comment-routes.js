@@ -1,19 +1,38 @@
-const router = require('express').Router();
-const Comment = require('../../models/Comment');
+const router = require("express").Router();
+const Comment = require("../../models/Comment");
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
+  const commentData = await Comment.findAll();
+
+  if (!commentData) {
+    res.status(400).send("error finding comments");
+    return;
+  }
+
+  res.status(200).send(commentData);
+});
+
+router.post("/", async (req, res) => {
   try {
-    const commentData = await Comment.findAll();
+    const commentData = await Comment.create({
+      content: req.body.content,
+      post_id: req.body.post_id,
+      user_id: req.session.user_id,
+    });
 
     if (!commentData) {
-      res.status(400).json({"Message": "No User's Found"})
+      res.status(400).json({ Message: "No comments's Found" });
+      return;
     }
-    res.status(200).send(commentData)
+    res.status(200).send(commentData);
+
+    return;
   } catch (error) {
-    res.status(500).json({"Message": "Internal Server Error Please try again later"})
+    res
+      .status(500)
+      .json({ Message: "Internal Server Error Please try again later" });
+    return;
   }
-  
 });
 
 module.exports = router;
-

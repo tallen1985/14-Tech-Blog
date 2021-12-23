@@ -21,29 +21,46 @@ router.post("/", authorize, async (req, res) => {
   }
 });
 
-router.get("/:id", authorize, async (req, res) => {
+router.put("/update/", authorize, async (req, res) => {
   try {
-    const postData = await Post.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
+    const updateData = await Post.update(
+      { title: req.body.title, content: req.body.content },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    );
 
-    if (!postData) {
-      res.status(400).json({ Message: "No Post Found" });
+    if (updateData > 0) {
+      res.json({ Message: "Update successful" });
+      document.location.replace("/dashboard");
       return;
+    } else {
+      res.json({ Message: "Update Failed" });
     }
-    let data = [postData].map((e) => e.get({ plain: true }));
-    res.render("post", {
-      data,
-      logged_in: req.session.logged_in,
-      user_name: req.session.user_name,
-    });
+  } catch (error) {
+    res.json({ Message: "Internal Server Error Please try again later" });
+  }
+});
+
+router.delete("/delete/:id", authorize, async (req, res) => {
+  try {
+    const postData = await Post.destroy(
+      { title: req.body.title, content: req.body.content },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    if (postData > 0) {
+      res.status(200).send("successfully deleted");
+    }
   } catch (error) {
     res
       .status(500)
       .json({ Message: "Internal Server Error Please try again later" });
   }
 });
-
 module.exports = router;

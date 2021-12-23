@@ -3,14 +3,21 @@
     class="container-fluid bg-dark text-white d-flex flex-row justify-content-between align-items-center"
   >
     <div class="p-2 text-center">
-      <h2>New Post</h2>
+      <h2>Edit Post</h2>
     </div>
   </div>
+  {{#each data as |post|}}
   <div class="container-fluid p-3">
-    <form class="text-center" id="postForm" data-method="post">
+    <form class="text-center" id="updateForm" data-method="post">
       <div class="mb-3 text-start">
         <label for="inputTitle" class="form-label">Post Title:</label>
-        <input type="text" class="form-control" id="inputTitle" required />
+        <input
+          type="text"
+          class="form-control"
+          id="inputTitle"
+          value="{{title}}"
+          required
+        />
       </div>
       <div class="mb-3 text-start">
         <label for="inputContent" class="form-label">Content</label>
@@ -19,9 +26,12 @@
           class="form-control"
           id="inputContent"
           required
-        ></textarea>
+        >{{content}}</textarea>
       </div>
-      <button type="submit" class="btn btn-dark mx-auto">Add Post</button>
+      {{/each}}
+      <button id="deleteBtn" type="button" class="btn btn-dark mx-auto">Delete
+        Post</button>
+      <input type="submit" value=" Update Post" class="btn btn-dark mx-auto"/>
     </form>
   </div>
 </div>
