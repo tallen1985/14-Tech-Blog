@@ -3,7 +3,7 @@
   data-id="{{id}}"
 >
   <div
-    class="container-fluid bg-dark text-white d-flex flex-row flex-wrap justify-content-between align-items-center"
+    class="container-fluid titleBox"
   >
     <div class="p-2 entryTitle"><h2>{{title}}</h2></div>
     <div class="px-2 text-light entryInfo">Created
@@ -14,7 +14,7 @@
       on
       {{formatDate createdAt}}</div>
   </div>
-  <div class="container-fluid p-3">
+  <div class="container-fluid p-3 entryContent">
     {{content}}
   </div>
   <div>
