@@ -47,7 +47,10 @@ if (postForm) {
 
     const sendForm = await fetch("/api/post/", {
       method: postForm.dataset.method,
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({
+        title: title.value.trim(),
+        content: content.value.trim(),
+      }),
       headers: { "Content-Type": "application/json" },
     });
 
