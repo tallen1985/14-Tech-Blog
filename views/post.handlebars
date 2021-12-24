@@ -1,8 +1,8 @@
 <h2>Add Comment</h2>
 {{#each data as |post|}}
 {{> blogPost}}
-<form class="text-center" id="commentForm" data-method="post">
-      <div class="mb-3 text-start">
+<form class="text-center bg-light border rounded" id="commentForm" data-method="post">
+      <div class="mb-3 text-start p-3">
         <label for="inputContent" class="form-label">What would you like to add?</label>
         <textarea
           type="text"
@@ -11,6 +11,6 @@
           required
         ></textarea>
       </div>
-      <button id="commentBtn" type="submit" class="btn btn-dark mx-auto">Add Comment</button>
+      <button id="commentBtn" type="submit" class="btn btn-dark mx-auto mb-3">Add Comment</button>
     </form>
 {{/each}}
