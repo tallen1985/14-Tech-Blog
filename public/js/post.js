@@ -6,6 +6,7 @@ const content = document.getElementById("inputContent");
 
 const postId = document.location.pathname.split("/");
 
+//If delete button and update form are present, create event for updating and deleting posts
 if (deleteBtn && updateForm) {
   const postId = document.location.pathname.split("/")[2];
 
@@ -41,6 +42,7 @@ if (deleteBtn && updateForm) {
   });
 }
 
+//if post form is present, set up logic to send post info to server
 if (postForm) {
   postForm.addEventListener("submit", async (e) => {
     e.preventDefault();

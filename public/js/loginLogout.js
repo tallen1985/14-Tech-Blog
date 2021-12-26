@@ -1,6 +1,7 @@
 const loginForm = document.getElementById("loginForm");
 const logoutBtn = document.getElementById("logoutBtn");
 
+// If on login page, process and send login info to server
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ if (loginForm) {
   });
 }
 
+//If logout button is present, set up for processing logout request
 if (logoutBtn) {
   logoutBtn.addEventListener("click", async () => {
     const response = await fetch("/api/users/logout", {

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User, Post, Comment } = require("../../models/index");
 
+//Signup route - sets up cookie, creates user and logs in
 router.post("/signup", async (req, res) => {
   try {
     console.log(req.body);
@@ -27,6 +28,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+//Route for logging in, setting up cookie
 router.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({
@@ -62,6 +64,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//Route for logging out
 router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {

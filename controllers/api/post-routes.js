@@ -2,6 +2,7 @@ const router = require("express").Router();
 const authorize = require("../../utils/authorize");
 const Post = require("../../models/Post");
 
+//Create a new post
 router.post("/", authorize, async (req, res) => {
   try {
     const postData = await Post.create({
@@ -11,7 +12,7 @@ router.post("/", authorize, async (req, res) => {
     });
 
     if (!postData) {
-      res.status(400).json({ Message: "No User's Found" });
+      res.status(400).json({ Message: "Post creation error" });
     }
     res.status(200).send(postData);
   } catch (error) {
@@ -21,6 +22,7 @@ router.post("/", authorize, async (req, res) => {
   }
 });
 
+//Route to update post
 router.put("/update/", authorize, async (req, res) => {
   try {
     const updateData = await Post.update(
@@ -44,6 +46,7 @@ router.put("/update/", authorize, async (req, res) => {
   }
 });
 
+//Route to delete post
 router.delete("/delete/:id", authorize, async (req, res) => {
   try {
     const postData = await Post.destroy(

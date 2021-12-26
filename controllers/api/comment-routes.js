@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Comment = require("../../models/Comment");
 
+//Returns all comments
 router.get("/", async (req, res) => {
   const commentData = await Comment.findAll();
 
@@ -12,6 +13,7 @@ router.get("/", async (req, res) => {
   res.status(200).send(commentData);
 });
 
+//Create a new comment
 router.post("/", async (req, res) => {
   try {
     const commentData = await Comment.create({

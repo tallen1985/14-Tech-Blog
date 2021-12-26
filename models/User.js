@@ -3,6 +3,7 @@ const sequelize = require("../config/connection");
 const bcrypt = require("bcryptjs");
 
 class User extends Model {
+  //method used to compare hashed password with saved password
   async validatePassword(passwordInput) {
     return await bcrypt.compare(passwordInput, this.password);
   }
@@ -26,6 +27,7 @@ User.init(
   },
   {
     hooks: {
+      //has password before saving or updating in database
       beforeCreate: async (newUser) => {
         newUser.password = await bcrypt.hash(newUser.password, 10);
         return newUser;
